@@ -1,0 +1,22 @@
+{
+  "name": "fullstacktest",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "ruochen.xie <ruochen.xie@bitmain.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3.3.5",
+    "jquery": "^3.3.1"
+  }
+}
