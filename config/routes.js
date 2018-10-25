@@ -26,8 +26,13 @@ module.exports = function (app) {
   // 登出
   app.get('/user/logout', User.logout)
   
- // userlist
- app.get('/admin/userlist', User.list)
+  // userlist
+  app.get('/admin/userlist', User.list)
+
+  // 登录页面
+  app.get('/signin', User.showSignin)
+  // 注册页面
+  app.get('/signup', User.showSignup)
 
   // 详情页
   app.get('/movie/:id', Movie.detail)
@@ -41,10 +46,10 @@ module.exports = function (app) {
   
   // 电影数据的存储
   app.post('/admin/movie/new', Movie.save)
-  
+
   app.get('/admin/list', Movie.list)
-  
-  // 删除
+
+  // 电影数据的删除
   app.delete('/admin/list', Movie.del)
   
   app.listen(3000, function () {

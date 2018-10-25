@@ -25,6 +25,18 @@ exports.signup = function(req, res) {
     }
   })
 }
+
+exports.showSignin = function(req, res) {
+  res.render('signin', {
+    title: '注册页面'
+  })
+}
+exports.showSignup = function(req, res) {
+  res.render('signup', {
+    title: '注册页面'
+  })
+}
+
 // 登录
 exports.signin = function(req,res) {
   var _user = req.body.user
