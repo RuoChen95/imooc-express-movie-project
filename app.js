@@ -1,19 +1,34 @@
 var express = require('express')
-var session = require('express-session')
 var cookieParser = require('cookie-parser')
+var session = require('express-session')
+
 var bodyParser = require('body-parser')
 var path = require('path')
 var mongoose = require('mongoose')
+var MongoStore = require('connect-mongo')(session)
 var _ = require('underscore')
 var Movie = require('./models/movie')
 var User = require('./models/user')
 var port = process.env.PORT || 3000
 
+var dbUrl = 'mongodb://localhost/imooc'
+
 var app = express()
 
 // 使用本地叫imooc的数据库
+mongoose.connect(dbUrl,{ useNewUrlParser: true })
 
-mongoose.connect('mongodb://localhost/imooc',{ useNewUrlParser: true })
+// cookie解析中间件
+app.use(cookieParser())
+// session解析中间件
+app.use(session({
+  secret: 'imooc',
+  store: new MongoStore({
+    url: dbUrl,
+    collection: 'sessions'
+  })
+}))
+
 
 app.set('views', './views/pages') // 更新路由
 app.set('view engine', 'pug') // 模版语法
@@ -24,24 +39,25 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-
-app.use(cookieParser())
-app.use(session({
-  secret: 'imooc'
-}))
-
-
 app.use(express.static(path.join(__dirname, 'public'))) // 静态文件的目录
 app.locals.moment = require('moment')
 
 console.log('imooc started on', port)
 
+// 预处理用户登录情况
+app.use(function(req,res, next) {
+  var _user = req.session.user || ''
+
+  if (_user) {
+    app.locals.user = _user
+  }
+  
+  return next()
+})
 
 // 首页
 app.get('/', function(req,res) {
-
-  console.log('req.session.user: ')
-  console.log(req.session.user)
+  console.log('user in session: ', req.session.user)
 
   Movie.fetch(function(err,movies){
     if(err){
@@ -135,6 +151,14 @@ app.post('/user/signin', function(req,res) {
       }
     })
   })
+})
+
+// 登出
+app.get('/user/logout', function(req, res) {
+  delete req.session.user
+  delete app.locals.user
+
+  res.redirect('/')
 })
 
 // 详情页

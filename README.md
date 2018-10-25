@@ -1,6 +1,8 @@
 # imooc-express-movie-project
 课程 https://www.imooc.com/video/1092 代码，跑通
 
+环境：Express 4.x
+
 ```
 sudo mongod
 
