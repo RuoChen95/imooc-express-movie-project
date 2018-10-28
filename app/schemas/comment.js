@@ -17,6 +17,20 @@ var CommentSchema = new mongoose.Schema({
         ref: 'User'
     },
     content: String,
+    // 回复
+    reply: [
+        {
+            from: {
+                type: ObjectId,
+                ref: 'User'
+            },
+            to: {
+                type: ObjectId,
+                ref: 'User'
+            },
+            content: String,
+        }
+    ],
     // 录入数据的时间记录
     meta: {
         createAt: {

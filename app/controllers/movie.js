@@ -10,6 +10,7 @@ exports.detail = function(req,res) {
     Comment
       .find({movie: id}) // 通过id找到这个电影的评论数据
       .populate('from', 'name') // 通过populate找到评论的userName，返回name这个数据
+      .populate('reply.from reply.to', 'name') // 通过populate找到评论的userName，返回name这个数据
       .exec(function(err, comments) {
         console.log(comments)
         res.render('detail',{

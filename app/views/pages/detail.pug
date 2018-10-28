@@ -13,24 +13,24 @@ block content
                             each item in comments
                                 li.media
                                     .pull-left
+                                        //- 锚点实现评论功能
                                         a.comment(href='#comments', data-cid=item._id, data-tid=item.from._id)
                                             img.media-object(style='width: 64px; height: 64px;')
                                     .media-body
-                                        //- 目前只能获取用户名称
                                         h4.media-heading  #{item.from.name}
                                         p #{item.content}
-                                        //- if item.reply && item.reply.length > 0
-                                        //-     each reply in item.reply
-                                        //-         .media
-                                        //-             .pull-left
-                                        //-                 a.comment(href='#comments', data-cid=item._id, data-tid=reply.from._id)
-                                        //-                     img.media-object(style='width: 64px; height: 64px;')
-                                        //-             .media-body
-                                        //-                 h4.media-heading
-                                        //-                     | #{reply.from.name}
-                                        //-                     span.text-info &nbsp;回复&nbsp;
-                                        //-                     | #{reply.to.name}：
-                                        //-                 p #{reply.content}
+                                        if item.reply && item.reply.length > 0
+                                             each reply in item.reply
+                                                 .media
+                                                     .pull-left
+                                                         a.comment(href='#comments', data-cid=item._id, data-tid=reply.from._id)
+                                                             img.media-object(style='width: 64px; height: 64px;')
+                                                     .media-body
+                                                         h4.media-heading
+                                                             | #{reply.from.name}
+                                                             span.text-info &nbsp;回复&nbsp;
+                                                             | #{reply.to.name}：
+                                                         p #{reply.content}
                                 hr
                             #comments
                                 form#commentForm(method='post', action='/user/comment')
@@ -56,3 +56,4 @@ block content
                     dd= movie.year
                     dt 简介
                     dd= movie.summary
+    script(src="/js/detail.js")
