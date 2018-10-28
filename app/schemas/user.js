@@ -11,6 +11,16 @@ var UserSchema = new mongoose.Schema({
     unique: true,
     type: String
   },
+  // 0: user
+  // 1: verified user
+  // 2: 
+  // ...
+  // >10: admin
+  // >50: super admin
+  role: {
+    type: Number,
+    default: 0,
+  },
   meta: {
     createAt: {
       type: Date,
@@ -24,7 +34,7 @@ var UserSchema = new mongoose.Schema({
 });
 
 
-// Ã¿´Î´æ´¢Êı¾İÖ®Ç°£¬¶¼µ÷ÓÃÒ»ÏÂÕâ¸ö·½·¨
+// æ¯æ¬¡å­˜å‚¨æ•°æ®ä¹‹å‰ï¼Œéƒ½è°ƒç”¨ä¸€ä¸‹è¿™ä¸ªæ–¹æ³•
 UserSchema.pre('save', function(next) {
   var user = this
   if (this.isNew) {
@@ -46,7 +56,7 @@ UserSchema.pre('save', function(next) {
   })
 });
 
-// ÊµÀı·½·¨
+// å®ä¾‹æ–¹æ³•
 UserSchema.methods = {
   comparePassword: function (password, cb) {
     bcrypt.compare(password, this.password, function (err, isMatch) {
@@ -56,7 +66,7 @@ UserSchema.methods = {
   }
 }
 
-// ¾²Ì¬·½·¨
+// é™æ€æ–¹æ³•
 UserSchema.statics = {
   fetch: function(cb) {
     return this

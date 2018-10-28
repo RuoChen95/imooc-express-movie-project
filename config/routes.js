@@ -27,30 +27,28 @@ module.exports = function (app) {
   app.get('/user/logout', User.logout)
   
   // userlist
-  app.get('/admin/userlist', User.list)
+  app.get('/admin/user/list', User.signinRequired, User.adminRequired, User.list)
 
-  // 登录页面
-  app.get('/signin', User.showSignin)
-  // 注册页面
-  app.get('/signup', User.showSignup)
+  app.get('/signin', User.showSignin) // 登录页面
+  app.get('/signup', User.showSignup) // 注册页面
 
   // 详情页
   app.get('/movie/:id', Movie.detail)
   
   // 电影数据的新建页
-  app.get('/admin/movie', Movie.new)
+  app.get('/admin/movie/new', User.signinRequired, User.adminRequired, Movie.new)
   
   // 电影数据的更新页
   // 更新页和新建页复用了
-  app.get('/admin/update/:id', Movie.update)
+  app.get('/admin/movie/update/:id', User.signinRequired, User.adminRequired, Movie.update)
   
   // 电影数据的存储
-  app.post('/admin/movie/new', Movie.save)
+  app.post('/admin/movie/new', User.signinRequired, User.adminRequired, Movie.save)
 
-  app.get('/admin/list', Movie.list)
+  app.get('/admin/movie/list', User.signinRequired, User.adminRequired, Movie.list)
 
   // 电影数据的删除
-  app.delete('/admin/list', Movie.del)
+  app.delete('/admin/movie/list', User.signinRequired, User.adminRequired, Movie.del)
   
   app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
