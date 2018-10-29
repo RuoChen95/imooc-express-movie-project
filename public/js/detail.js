@@ -4,20 +4,30 @@ $(function () {
         var toId = target.data('tid');
         var commentId = target.data('cid');
 
-        $('<input>')
-        .attr({
-            type: 'hidden',
-            name: 'comment[tid]',
-            value: toId
-        })
-        .appendTo('#commentForm')
+        if($('#toId').length > 0) {
+            $('#toId').val(toId)
+        } else {
+          $('<input>')
+            .attr({
+              id: 'toId',
+              type: 'hidden',
+              name: 'comment[tid]',
+              value: toId
+            })
+            .appendTo('#commentForm')
+        }
 
-        $('<input>')
-        .attr({
-            type: 'hidden',
-            name: 'comment[cid]',
-            value: commentId
-        })
-        .appendTo('#commentForm')
+        if($('#commentId').length > 0) {
+          $('#commentId').val(toId)
+        } else {
+          $('<input>')
+            .attr({
+              id: 'commentId',
+              type: 'hidden',
+              name: 'comment[cid]',
+              value: commentId
+            })
+            .appendTo('#commentForm')
+        }
     });
 });

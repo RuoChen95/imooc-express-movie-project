@@ -7,6 +7,7 @@ exports.save = function (req, res) {
   var movieId = _comment.movie
 
   if (_comment.cid) {
+    // 通过id来查找comment数据子类
     Comment.findById(_comment.cid, function (err, comment) {
       var reply = {
         from: _comment.from,
