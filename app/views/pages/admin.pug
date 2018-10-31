@@ -18,6 +18,11 @@ block content
             input#inputTitle.form-control(type="text", name="movie[title]", value=movie.title)
 
         .form-group
+          label.col-sm-2.control-label(for="inputCategoryName") 电影分类
+          .col-sm-10
+            input#inputCategoryName.form-control(type="text", name="movie[categoryName]", value=movie.categoryName)
+
+        .form-group
           label.col-sm-2.control-label 分类选择
           each cat in categories
             label.radio-inline

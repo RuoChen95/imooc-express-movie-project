@@ -80,19 +80,41 @@ exports.save = function(req,res){
 
     var catId = _movie.category
 
+    // 由于_movie这个类中并没有categoryName这个类，所以不能用_movie.categoryName（否则会返回undefined）
+    var catName = movieObj.categoryName
+    // 先储存movie
     _movie.save(function(err,movie){
       if (err) {
         console.log(err)
       }
 
+      // 储存成功后处理category
       // 通过当前的catId来拿到此id对应的分类，然后存到category表中
-      Category.findById(catId, function(err, category) {
-        category.movies.push(movie._id)
+      if (catId) {
+        Category.findById(catId, function(err, category) {
+          category.movies.push(movie._id)
+
+          category.save(function(err, category) {
+            res.redirect('/movie/' + movie._id)
+          })
+        })
+      } else if (catName) {
+        // console.log(movie.id)
+        var category = new Category({
+          name: catName,
+          movies: [movie._id],
+        })
+
+
 
         category.save(function(err, category) {
-          res.redirect('/movie/' + movie._id)
+          movie.category = category._id
+
+          movie.save(function(err, movie) {
+            res.redirect('/movie/' + movie._id)
+          })
         })
-      })
+      }
     })
   }
 }
