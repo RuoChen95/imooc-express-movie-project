@@ -8,6 +8,7 @@ var MovieSchema = new mongoose.Schema({
     flash: String,
     poster: String,
     year: Number,
+    category: String,
     // 录入数据的时间记录
     meta: {
         createAt: {

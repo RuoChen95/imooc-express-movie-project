@@ -6,6 +6,7 @@ var Category = require('../app/controllers/category')
 var _ = require('underscore')
 
 
+// 路由处理器
 module.exports = function (app) {
   // 预处理用户登录情况
   app.use(function (req, res, next) {
