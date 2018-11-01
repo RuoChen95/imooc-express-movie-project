@@ -9,6 +9,13 @@ var path = require('path')
 exports.detail = function(req,res) {
   var id = req.params.id
   Movie.findById(id,function(err,movie){
+
+    Movie.update({_id: id}, {$inc: {pv: 1}}, function(err) {
+      if (err) {
+        console.log(err)
+      }
+    })
+
     // 使用回调的方式来获取movieId所对应的comment
     Comment
       .find({movie: id}) // 通过id找到这个电影的评论数据
