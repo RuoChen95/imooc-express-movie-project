@@ -4,7 +4,8 @@ var User = require('../app/controllers/user')
 var Comment = require('../app/controllers/comment')
 var Category = require('../app/controllers/category')
 var _ = require('underscore')
-
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 
 // 路由处理器
 module.exports = function (app) {
@@ -38,7 +39,7 @@ module.exports = function (app) {
 
   app.get('/movie/:id', Movie.detail) // 详情页
   app.get('/admin/movie/new', User.signinRequired, User.adminRequired, Movie.new) // 电影数据的新建页
-  app.post('/admin/movie/new', User.signinRequired, User.adminRequired, Movie.save) // 电影数据的存储
+  app.post('/admin/movie/new', User.signinRequired, User.adminRequired, multipartMiddleware, Movie.savePoster, Movie.save) // 电影数据的存储
   app.get('/admin/movie/update/:id', User.signinRequired, User.adminRequired, Movie.update) // 电影数据的更新页
   app.get('/admin/movie/list', User.signinRequired, User.adminRequired, Movie.list)
   app.delete('/admin/movie/list', User.signinRequired, User.adminRequired, Movie.del) // 电影数据的删除

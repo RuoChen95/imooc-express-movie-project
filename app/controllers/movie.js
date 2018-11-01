@@ -2,6 +2,8 @@ var Movie = require('../models/movie')
 var Category = require('../models/category')
 var Comment = require('../models/comment')
 var _ = require('underscore')
+var fs = require('fs')
+var path = require('path')
 
 // 详情页
 exports.detail = function(req,res) {
@@ -58,6 +60,11 @@ exports.save = function(req,res){
   var id = req.body.movie._id;
   var movieObj = req.body.movie;
   var _movie = null;
+
+  if (req.poster) {
+    movieObj.poster = req.poster
+  }
+
   if (id) {
     Movie.findById(id, (err,movie)=>{
       if (err) {
@@ -142,4 +149,31 @@ exports.del = function(req,res) {
       res.json({success: 1})
     }
   })
+}
+
+// 中间件
+// 存储海报功能
+exports.savePoster = function(req, res, next) {
+  var posterData = req.files.uploadPoster
+  console.log(posterData)
+  var filePath = posterData.path // 服务器缓存路径
+  var originalFilename = posterData.originalFilename
+
+  if (originalFilename) {
+    fs.readFile(filePath, function(err, data) {
+      var timestamp = Date.now()
+      var type = posterData.type.split('/')[1]
+      var poster = timestamp + '.' + type
+
+      // 生成服务器存储地址
+      var newPath = path.join(__dirname, '../../public/upload/' + poster)
+
+      fs.writeFile(newPath, data, function(err) {
+        req.poster = poster
+        next()
+      })
+    })
+  } else {
+    next()
+  }
 }

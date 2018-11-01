@@ -13,7 +13,10 @@ block content
 							.col-md-2
 								.thumbnail
 									a(href="/movie/" + item._id)
-										img(src=item.poster)
+										if item.poster.indexOf('http') > -1
+											img(src=item.poster)
+										else
+											img(src="/upload/" + item.poster,)
 									h3 #{item.title}
 									p
 										a.btn.btn-primary(href="/movie/" + item._id, role=button) 查看详情
