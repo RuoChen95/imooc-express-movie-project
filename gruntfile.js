@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
 
-  // ¶¨ÒåÈÎÎñ
+  // å®šä¹‰ä»»åŠ¡
   grunt.initConfig({
     watch: {
       pug: {
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
           watchedExtensions: ['js'],
           watchFolders: ['./'],
           debug: true,
-          delayTime: 1, // µÈ´ıÊ±¼ä£¬·ÀÖ¹¶à´ÎÖØÆô
+          delayTime: 1, // ç­‰å¾…æ—¶é—´ï¼Œé˜²æ­¢å¤šæ¬¡é‡å¯
           env: {
             PORT: 3000
           },
@@ -53,8 +53,14 @@ module.exports = function(grunt) {
       }
     },
 
+    mochaTest: {
+      options: {
+        reporter: 'spec'
+      },
+      src: ['test/**/*.js']
+    },
 
-    // ´«ÈëÁ½¸öÈÎÎñ£ºnodemonºÍwatch
+    // ä¼ å…¥ä¸¤ä¸ªä»»åŠ¡ï¼šnodemonå’Œwatch
     concurrent: {
       tasks: ['nodemon', 'watch'],
       options: {
@@ -63,12 +69,15 @@ module.exports = function(grunt) {
     }
   })
 
-  grunt.loadNpmTasks('grunt-contrib-watch') // Ö»ÒªÓĞÎÄ¼şĞŞ¸Ä£¬ÖØĞÂÖ´ĞĞÄãÔÚÀïÃæ×¢²áºÃµÄÈÎÎñ
-  grunt.loadNpmTasks('grunt-nodemon') // ÊÂÊµ¼àÌıapp.js£¬Èç¹ûÆäÓĞ±ä¶¯¾ÍÖØÆô
-  grunt.loadNpmTasks('grunt-concurrent') // Õë¶ÔÂıÈÎÎñ£¨less£©£¬×èÈûÈÎÎñ£¨node£©
+  grunt.loadNpmTasks('grunt-contrib-watch') // åªè¦æœ‰æ–‡ä»¶ä¿®æ”¹ï¼Œé‡æ–°æ‰§è¡Œä½ åœ¨é‡Œé¢æ³¨å†Œå¥½çš„ä»»åŠ¡
+  grunt.loadNpmTasks('grunt-nodemon') // äº‹å®ç›‘å¬app.jsï¼Œå¦‚æœå…¶æœ‰å˜åŠ¨å°±é‡å¯
+  grunt.loadNpmTasks('grunt-concurrent') // é’ˆå¯¹æ…¢ä»»åŠ¡ï¼ˆlessï¼‰ï¼Œé˜»å¡ä»»åŠ¡ï¼ˆnodeï¼‰
   //grunt.loadNpmTasks("grunt-reload")
 
-  grunt.option('force', true) // ·ÀÖ¹ÓÉÓÚÓï·¨´íÎóÖĞ¶ÏÕû¸ö·şÎñ
+  grunt.option('force', true) // é˜²æ­¢ç”±äºè¯­æ³•é”™è¯¯ä¸­æ–­æ•´ä¸ªæœåŠ¡
   grunt.registerTask('default', ['concurrent'])
   //grunt.registerTask('livereload', ['reload', 'watch'])
+
+  // æµ‹è¯•
+  grunt.registerTask('test', ['mochaTest'])
 }
