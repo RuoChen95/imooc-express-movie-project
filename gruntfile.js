@@ -55,7 +55,7 @@ module.exports = function(grunt) {
 
     mochaTest: {
       options: {
-        reporter: 'spec'
+        reporter: 'spec',
       },
       src: ['test/**/*.js']
     },
@@ -72,12 +72,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch') // 只要有文件修改，重新执行你在里面注册好的任务
   grunt.loadNpmTasks('grunt-nodemon') // 事实监听app.js，如果其有变动就重启
   grunt.loadNpmTasks('grunt-concurrent') // 针对慢任务（less），阻塞任务（node）
+  grunt.loadNpmTasks('grunt-mocha-test') // 测试任务模块
   //grunt.loadNpmTasks("grunt-reload")
 
   grunt.option('force', true) // 防止由于语法错误中断整个服务
   grunt.registerTask('default', ['concurrent'])
   //grunt.registerTask('livereload', ['reload', 'watch'])
 
-  // 测试
-  grunt.registerTask('test', ['mochaTest'])
+  grunt.registerTask('test', ['mochaTest']) // 注册测试任务
 }
