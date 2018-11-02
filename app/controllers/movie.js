@@ -43,7 +43,7 @@ exports.new = function(req,res) {
   })
 }
 
-// 电影数据的更新页
+// 电影数据的更新页（显示接口）
 // 更新页和新建页复用了
 exports.update = function(req,res){
   var id = req.params.id
@@ -62,7 +62,7 @@ exports.update = function(req,res){
   }
 }
 
-// 电影数据的存储
+// 电影数据的存储（POST接口）
 exports.save = function(req,res){
   var id = req.body.movie._id;
   var movieObj = req.body.movie;
@@ -72,24 +72,51 @@ exports.save = function(req,res){
     movieObj.poster = req.poster
   }
 
+  // 更新
   if (id) {
     Movie.findById(id, (err,movie)=>{
       if (err) {
         console.log(err);
       }
 
+      // 删除category中的movie类
+      var ShouldDeletedCategoryId = movie.category
+
       _movie = _.extend(movie, movieObj);
+
+      var ShouldAddedCategoryId = movie.category
       _movie.save(function (err, movie) {
         if (err) {
           console.log(err);
         };
 
-        res.redirect('/movie/' + movie._id);
+        Category.findById(ShouldDeletedCategoryId, function(err, category) {
+
+          var movieIndex = category.movies.indexOf(movie._id)
+
+          if (movieIndex !== -1) {
+            category.movies.splice(movieIndex, 1)
+
+            category.save(function(err, category) {
+
+              Category.findById(ShouldAddedCategoryId, function(err, category) {
+                category.movies.push(movie._id)
+
+                category.save(function(err, category) {
+                  res.redirect('/movie/' + movie._id)
+                })
+              })
+            })
+          } else {
+            res.redirect('/movie/' + movie._id)
+          }
+        })
       })
     })
   }
 
   else{
+    // 增加
     _movie = new Movie(movieObj)
 
     var catId = _movie.category
