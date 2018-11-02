@@ -38,7 +38,7 @@ node app.js
 
 
 ### bug-list
-1. 当登录的时候故意输入错误的密码，会跳到空白页面，报错：“Cannot GET /user/signin”
+1. 当登录的时候故意输入错误的密码，会跳到空白页面，报错：“Cannot GET /user/signin”(done)
 2. mongoose数据处理：populate以及嵌套的区别和联系，电影下其类型的更新有问题
 
 ### todo-list

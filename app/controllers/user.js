@@ -66,7 +66,7 @@ exports.signin = function(req,res) {
         return res.redirect('/')
       } else {
         console.log('Password is not matched')
-        return res.redirect('signin')
+        return res.redirect('/signin')
       }
     })
   })
