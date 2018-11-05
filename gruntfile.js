@@ -62,9 +62,30 @@ module.exports = function(grunt) {
 
     // 传入两个任务：nodemon和watch
     concurrent: {
-      tasks: ['nodemon', 'watch'],
+      tasks: ['nodemon', 'watch', 'less', 'uglify', 'jshint'],
       options: {
         logConcurrentOutput: true
+      }
+    },
+
+    less: {
+      development: {
+        options: {
+          compress: true,
+          yuicompress: true,
+          optimization: 2
+        },
+        files: {
+          'public/build/index.css': 'public/less/index.less' // 输出: 输入
+        }
+      }
+    },
+    uglify: {
+      development: {
+        files: {
+          'public/build/admin.min.js': 'public/js/admin.js',
+          'public/build/detail.min.js': 'public/js/detail.js',
+        }
       }
     }
   })
@@ -77,6 +98,10 @@ module.exports = function(grunt) {
 
   grunt.option('force', true) // 防止由于语法错误中断整个服务
   grunt.registerTask('default', ['concurrent'])
+
+  grunt.loadNpmTasks('grunt-contrib-less') // less的编译
+  grunt.loadNpmTasks('grunt-contrib-uglify') // 文件压缩
+  grunt.registerTask('build', ['less', 'uglify'])
   //grunt.registerTask('livereload', ['reload', 'watch'])
 
   grunt.registerTask('test', ['mochaTest']) // 注册测试任务
