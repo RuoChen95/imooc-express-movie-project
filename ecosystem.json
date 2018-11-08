@@ -1,26 +1,26 @@
 {
   "apps" : [{
-    "name"      : "Website",
-    "script"    : "app.js",
+    "name": "Website",
+    "script": "app.js",
     "env": {
       "COMMON_VARIABLE": "true"
     },
-    "env_production" : {
+    "env_production": {
       "NODE_ENV": "production"
     }
   }],
   "deploy" : {
     "production" : {
-      "user" : "imooc_manager",
-      "host" : ["39.105.177.205"],
+      "user": "imooc_manager",
+      "host": ["39.105.177.205"],
       "port": "39999",
-      "ref"  : "origin/master",
-      "repo" : "https://github.com/RuoChen95/imooc-express-movie-project",
-      "path" : "/www/website",
+      "ref": "origin/master",
+      "repo": "https://github.com/RuoChen95/imooc-express-movie-project",
+      "path": "/www/website/production",
       "ssh_options": "StrictHostKeyChecking=no",
-      "env"  : {
+      "env": {
         "NODE_ENV": "production"
       }
-    },
+    }
   }
 }
