@@ -8,8 +8,13 @@ var path = require('path')
 var mongoose = require('mongoose')
 var MongoStore = require('connect-mongo')(session)
 var port = process.env.PORT || 3000
+var env = process.env.NODE_ENV || 'development'
 
 var dbUrl = 'mongodb://localhost/imooc'
+
+if (env !== 'development') {
+  dbUrl = 'mongodb://127.0.0.1:27017/imooc'
+}
 
 var app = express()
 
