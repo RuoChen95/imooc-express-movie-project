@@ -50,5 +50,8 @@ node app.js
 # imooc服务端部署相关
 课程 https://coding.imooc.com/lesson/95.html#mid=3163 代码 跑通
 
+### 项目的线上代码
+http://39.105.177.205:3000/
+
 ### todo-list
-1. 实现静态资源的获取
+1. 实现正确的静态资源获取方式（目前通过引用官方link）
