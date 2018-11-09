@@ -45,3 +45,10 @@ node app.js
 ### todo-list
 1. 图片异步方式上传而非引入中间件的方式，以节省时间
 
+---
+
+# imooc服务端部署相关
+课程 https://coding.imooc.com/lesson/95.html#mid=3163 代码 跑通
+
+### todo-list
+1. 实现静态资源的获取
